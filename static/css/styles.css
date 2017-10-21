@@ -1,0 +1,22 @@
+h1{
+  color:red;
+  padding-top: 10px;
+  border: beige;
+  border: 10px blue solid;
+}
+h2{
+  color: #1b35a0;
+}
+
+#heading1{
+  background-color: #3b439b;
+  display: inline;
+}
+h2{
+  margin-left: 150px;
+}
+
+.ml500{
+  margin-left: 150px;
+  display: inline-block;
+}
