@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request
 import mlab
 from mongoengine import *
 from faker import Faker
@@ -22,6 +22,14 @@ class Girl(Document):
 def index2():
     return render_template('homepage.html')
 
+@app.route('/project')
+def ex23():
+    return render_template("index.html")
+
+@app.route('/include')
+def include():
+    return render_template("include_ex.html")
+
 @app.route('/clgt')
 def index():
     # data=[
@@ -40,6 +48,34 @@ def index():
     # ]
     girl_list=Girl.objects()
     return render_template('girls.html',girls=girl_list)
+
+
+
+@app.route('/<int:id>', methods=['POST'])
+def delete_entry(id):
+    form=request.form
+    name=form['girlname']
+    girl=Girl(name=name)
+    Girl.objects(name=name).delete()
+    return "Deleted"
+
+@app.route('/addgirl', methods=['GET','POST'])
+def addgirl():
+    if request.method=="GET":
+        return render_template('addgirl.html')
+    elif request.method=="POST":
+        form=request.form
+        name=form['name']
+        image=form['image']
+        describtion=form['describtion']
+        girl=Girl(name=name,describtion=describtion,image=image,rating=1.2)
+        girl.save()
+        return "Added"
+
+@app.route('/admin')
+def admin():
+    girl_list=Girl.objects()
+    return render_template('admin.html',girls=girl_list)
 
 @app.route('/list')
 def list_demo():
